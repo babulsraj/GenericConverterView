@@ -114,7 +114,7 @@ public struct CustomPicker: View {
     }
 }
 
-extension View {
+public extension View {
     func errorAlert(error: Binding<Error?>, buttonTitle: String = "OK") -> some View {
         let localizedAlertError = LocalizedAlertError(error: error.wrappedValue)
         return alert(isPresented: .constant(localizedAlertError != nil), error: localizedAlertError) { _ in
@@ -127,16 +127,17 @@ extension View {
     }
 }
 
-struct LocalizedAlertError: LocalizedError {
+public struct LocalizedAlertError: LocalizedError {
     let underlyingError: LocalizedError
-    var errorDescription: String? {
+    
+    public var errorDescription: String? {
         underlyingError.errorDescription
     }
-    var recoverySuggestion: String? {
+    public var recoverySuggestion: String? {
         underlyingError.recoverySuggestion
     }
 
-    init?(error: Error?) {
+    public init?(error: Error?) {
         guard let localizedError = error as? LocalizedError else { return nil }
         underlyingError = localizedError
     }
