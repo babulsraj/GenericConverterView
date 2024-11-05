@@ -82,7 +82,7 @@ public struct ConverterView<T:ConverterViewDataProvider>: View where T: Observab
 }
 
 
-struct CustomPicker: View {
+public struct CustomPicker: View {
     public var title: String
     @Binding public var selection: String
     public var items: [String]
@@ -93,7 +93,7 @@ struct CustomPicker: View {
         self.items = items
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment:.leading) {
             HStack(spacing:8) {
                 Text("\(title) :")
