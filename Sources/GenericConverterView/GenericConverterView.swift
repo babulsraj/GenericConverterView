@@ -4,10 +4,17 @@
 import SwiftUI
 
 public struct ConverterViewModel {
-    var title: String
-    var subTitle: String
-    var itemsToConvert:[String]
-    var convertedResult:String
+    public var title: String
+    public var subTitle: String
+    public var itemsToConvert:[String]
+    public var convertedResult:String
+    
+   public  init(title: String, subTitle: String, itemsToConvert: [String], convertedResult: String) {
+        self.title = title
+        self.subTitle = subTitle
+        self.itemsToConvert = itemsToConvert
+        self.convertedResult = convertedResult
+    }
 }
 
 public protocol ConverterViewDataProvider:ObservableObject {
@@ -75,12 +82,18 @@ public struct ConverterView<T:ConverterViewDataProvider>: View where T: Observab
 }
 
 
-public struct CustomPicker: View {
-    var title: String
-    @Binding var selection: String
-    var items: [String]
+struct CustomPicker: View {
+    public var title: String
+    @Binding public var selection: String
+    public var items: [String]
     
-    public var body: some View {
+    public init(title: String, selection: Binding<String>, items: [String]) {
+        self.title = title
+        self._selection = selection
+        self.items = items
+    }
+    
+    var body: some View {
         VStack(alignment:.leading) {
             HStack(spacing:8) {
                 Text("\(title) :")
@@ -101,7 +114,7 @@ public struct CustomPicker: View {
     }
 }
 
-public extension View {
+extension View {
     func errorAlert(error: Binding<Error?>, buttonTitle: String = "OK") -> some View {
         let localizedAlertError = LocalizedAlertError(error: error.wrappedValue)
         return alert(isPresented: .constant(localizedAlertError != nil), error: localizedAlertError) { _ in
@@ -114,12 +127,12 @@ public extension View {
     }
 }
 
-public struct LocalizedAlertError: LocalizedError {
+struct LocalizedAlertError: LocalizedError {
     let underlyingError: LocalizedError
-    public var errorDescription: String? {
+    var errorDescription: String? {
         underlyingError.errorDescription
     }
-    public var recoverySuggestion: String? {
+    var recoverySuggestion: String? {
         underlyingError.recoverySuggestion
     }
 
